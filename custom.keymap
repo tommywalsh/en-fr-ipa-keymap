@@ -1,0 +1,40 @@
+
+partial alphanumeric_keys
+xkb_symbols "us-fr-ipa" {
+
+   include "us(intl)"
+   name[Group1]="American English, plus French and IPA";
+   key.type[Group1] = "EIGHT_LEVEL";
+
+   // Typing rules:
+   // If the character is an American English character, then just type the letter directly  ("e" key -> "e")
+   // Otherwise, if the character is a French accented character, then use r-alt plus the key that looks like the accent, then the letter ("r-alt"+"'" keys, then "e" key -> "é")
+   // Otherwise, if the character is a French ligature, then use r-alt plus the key for the first letter ("r-alt"+"o" keys -> "œ")
+   // Otherwise, for IPA characters, use the r-ctrl key plus the key for the letter closest to the sound ("r-ctrl"+"o" keys -> "ø")
+   //
+   // There is overlap in the character sets, so follow the earliest rule that applies:
+   // For example, "z" is an IPA symbol, but it is also an American English letter, so you follow the AmEng rule because that rule comes first.
+   // Likewise "œ" is an IPA symbol, but it is also a French ligature, so you follow the French ligature rule.
+
+   key <TLDE> { [     grave,  asciitilde,      dead_grave,      dead_tilde,       grave,  asciitilde] };
+   key <AC11> { [apostrophe,    quotedbl,      dead_acute,  dead_diaeresis,  apostrophe,    quotedbl] };
+   key <AB08> { [     comma,        less,    dead_cedilla,    dead_cedilla,       comma,        less] };
+   key <AE06> { [         6, asciicircum, dead_circumflex, dead_circumflex,           6, asciicircum] };
+
+   key <AC01> { [         a,           A,              ae,              AE,       U0251,       U0252] };
+   key <AD03> { [         e,           E,               e,               E,       schwa,       U025B] };
+   key <AD08> { [         i,           I,               i,               I,       U026A,       U026A] };
+   key <AD09> { [         o,           O,              oe,              OE,      oslash,       U0254] };
+   key <AD07> { [         u,           U,               u,               U,       U028A,       U028C] };
+
+   key <AC03> { [         d,           D,               d,               D,         eth,         eth] };
+   key <AC06> { [         h,           H,               h,               H,       U0265,       U0265] };
+   key <AB06> { [         n,           N,               n,               N,         eng,       U0272] };
+   key <AD04> { [         r,           R,               r,               R,       U0281,       U0279] };
+   key <AC02> { [         s,           S,               s,               S,       U0283,       U0283] };
+   key <AD05> { [         t,           T,               t,               T, Greek_theta, Greek_theta] };
+   key <AB01> { [         z,           Z,               z,               Z,       U0292,       U0292] };
+
+   include "level3(ralt_switch)"
+   include "level5(rctrl_switch)"
+};

@@ -46,7 +46,7 @@ generate these symbols, so I decided to settle for ã, ẽ, and õ.
 
 The right "ctrl" key is used to generated the remaining supported IPA characters, according to this table:
 
-| Right "ctrl" plus" | Without shift | With shift |
+| Right "ctrl" plus: | Without shift | With shift |
 |:------------------:|:-------------:|:----------:|
 |a                   |ɑ              |ɒ           |
 |e                   |ə              |ɛ           |
@@ -64,8 +64,8 @@ The right "ctrl" key is used to generated the remaining supported IPA characters
 #### Missing characters
 This keymap does not support the following English/French IPA characters:
 
-- œ̃: Nasal vowel used in Quebec and some other places (but not in Parisian French)
-- ʔ: Glottal stop used in some UK accents, (e.g. in place of /t/ in "butter")
+- **œ̃** Nasal vowel used in Quebec and some other places (but not in Parisian French)
+- **ʔ**: Glottal stop used in some UK accents, (e.g. in place of /t/ in "butter")
 
 
 ## Code Layout

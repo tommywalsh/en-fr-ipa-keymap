@@ -1447,15 +1447,6 @@
               <iso639Id>deu</iso639Id>
             </languageList>
           </configItem>
-          <configItem>
-            <name>3l</name>
-            <description>3l</description>
-            <languageList>
-              <iso639Id>eng</iso639Id>
-              <iso639Id>fra</iso639Id>
-              <iso639Id>deu</iso639Id>
-            </languageList>
-          </configItem>
         </variant>
         <variant>
           <configItem>
@@ -2100,7 +2091,7 @@
             <shortDescription>ta</shortDescription>
             <description>Tamil (TamilNet '99 with Tamil numerals)</description>
             <languageList>
-              <iso639Id>tam</iso639Id>
+             <iso639Id>tam</iso639Id>
             </languageList>
           </configItem>
         </variant>

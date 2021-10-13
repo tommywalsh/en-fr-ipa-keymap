@@ -18,7 +18,8 @@ xkb_symbols "us-fr-ipa" {
 
    key <TLDE> { [     grave,  asciitilde,      dead_grave,      dead_tilde,       grave,  asciitilde] };
    key <AC11> { [apostrophe,    quotedbl,      dead_acute,  dead_diaeresis,  apostrophe,    quotedbl] };
-   key <AB08> { [     comma,        less,    dead_cedilla,    dead_cedilla,       comma,        less] };
+   key <AB08> { [     comma,        less,    dead_cedilla,   guillemotleft,       comma,        less] };
+   key <AB09> { [    period,     greater,          period,  guillemotright,      period,     greater] };
    key <AE06> { [         6, asciicircum, dead_circumflex, dead_circumflex,           6, asciicircum] };
 
    key <AC01> { [         a,           A,              ae,              AE,       U0251,       U0252] };

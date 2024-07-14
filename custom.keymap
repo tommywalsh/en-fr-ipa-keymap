@@ -1,41 +1,57 @@
 
+
+// This keyboard definition attempts to support the following, with increasing level of inconvenience:
+// 1) Typing in US English, using only the familiar keyboard levels 1 (no modifiers) and 2 (shift key).
+// 2) Typing in French, by also adding levels 3 (right super) and 4 (right super + shift).
+// 3) Typing International Phonetic Alphabet characters, by adding levels 5 (menu) and 6 (menu + shift)
+// 4) Other symbols (e.g. math), by adding levels 7 (right super + menu) and 8 (right super + menu + shift)
+
 partial alphanumeric_keys
 xkb_symbols "us-fr-ipa" {
 
-   include "us(intl)"
-   name[Group1]="American English, plus French and IPA";
+   include "us(basic)"
+   name[Group1] = "American English, plus French and IPA";
    key.type[Group1] = "EIGHT_LEVEL";
 
-   // Typing rules:
-   // If the character is an American English character, then just type the letter directly  ("e" key -> "e")
-   // Otherwise, if the character is a French accented character, then use r-alt plus the key that looks like the accent, then the letter ("r-alt"+"'" keys, then "e" key -> "é")
-   // Otherwise, if the character is a French ligature, then use r-alt plus the key for the first letter ("r-alt"+"o" keys -> "œ")
-   // Otherwise, for IPA characters, use the r-ctrl key plus the key for the letter closest to the sound ("r-ctrl"+"o" keys -> "ø")
+   // We explicitly define our modifier keys rather than including a pre-existing definition, to guard against
+   // missing/changed system files.
+   key <RWIN> {[  ISO_Level3_Shift  ], type[group1]="ONE_LEVEL" };
+   key <MENU> {[  ISO_Level5_Shift  ], type[group1]="ONE_LEVEL" };
+
+   // Here we define all of our modifications to the basic US keymap. If any of the special-case columns does not need
+   // anything, we echo the English defs. Some keys are not specified, as they are unmodified from "us(basic)"
+   // Descriptive xkb names used where known. Otherwise, unicode numbers are used with a comment
    //
-   // There is overlap in the character sets, so follow the earliest rule that applies:
-   // For example, "z" is an IPA symbol, but it is also an American English letter, so you follow the AmEng rule because that rule comes first.
-   // Likewise "œ" is an IPA symbol, but it is also a French ligature, so you follow the French ligature rule.
+   //                    Am. English               Special-case French           Special-case IPA             Other symbols
+   //                    vvvvvvvvvvv               vvvvvvvvvvvvvvvvvvv           vvvvvvvvvvvvvvvv             vvvvvvvvvvvvv
+   key <TLDE> { [     grave,  asciitilde,      dead_grave,      dead_tilde,       grave,  asciitilde,       grave,  asciitilde] };
+   key <AE02> {	[         2,          at,               2,              at,           2,          at,       U00BD,          at] }; // one-half
+   key <AE03> {	[         3,  numbersign,               3,      numbersign,           3,  numbersign,       U2153,       U2154] }; // one-third, two-thirds
+   key <AE04> {	[         4,      dollar,               4,          dollar,           4,      dollar,       U00BC,       U00BE] }; // one-fourth, three-fourths
+   key <AE06> { [         6, asciicircum, dead_circumflex, dead_circumflex,           6, asciicircum,           6, asciicircum] };
+   key <AE12> { [     equal,        plus,           equal,            plus,       equal,        plus,       U2245,       U00B1]}; // appx equal, plus/minus
 
-   key <TLDE> { [     grave,  asciitilde,      dead_grave,      dead_tilde,       grave,  asciitilde] };
-   key <AC11> { [apostrophe,    quotedbl,      dead_acute,  dead_diaeresis,  apostrophe,    quotedbl] };
-   key <AB08> { [     comma,        less,    dead_cedilla,   guillemotleft,       comma,        less] };
-   key <AB09> { [    period,     greater,          period,  guillemotright,      period,     greater] };
-   key <AE06> { [         6, asciicircum, dead_circumflex, dead_circumflex,           6, asciicircum] };
+   key <AD03> { [         e,           E,           U20AC,           U20AC,       schwa,       U025B,       U2208,       U2203] }; // euro, open e, element of, there exists
+   key <AD04> { [         r,           R,               r,               R,       U0281,       U0279,           r,           R] }; // inverted r, turned r
+   key <AD05> { [         t,           T,               t,               T, Greek_theta, Greek_theta,       U2122,      U1F44D] }; // trademark, thumbs up
+   key <AD06> { [         y,           Y,               y,               Y,           y,           Y,       U0085,       U0085] }; // yen
+   key <AD07> { [         u,           U,               u,               U,       U028A,       U028C,       U00B5,       U00B5] }; // upsilon, inverted v, micro
+   key <AD08> { [         i,           I,               i,               I,       U026A,       U026A,           i,           I] }; // smallcap i
+   key <AD09> { [         o,           O,              oe,              OE,      oslash,       U0254,       U2205,       U2205] }; // open o, empty set
+   key <AD10> { [         p,           P,               p,               P,           p,           P,       U03C0,       U0278] }; // pi, phi
 
-   key <AC01> { [         a,           A,              ae,              AE,       U0251,       U0252] };
-   key <AD03> { [         e,           E,               e,               E,       schwa,       U025B] };
-   key <AD08> { [         i,           I,               i,               I,       U026A,       U026A] };
-   key <AD09> { [         o,           O,              oe,              OE,      oslash,       U0254] };
-   key <AD07> { [         u,           U,               u,               U,       U028A,       U028C] };
+   key <AC01> { [         a,           A,              ae,              AE,       U0251,       U0252,       U2200,       U2200] }; // latin alpha, turned latin alpha, for all
+   key <AC02> { [         s,           S,               s,               S,       U0283,       U0283,       U2605,       U2606] }; // esh, star, unfilled star
+   key <AC03> { [         d,           D,               d,               D,         eth,         eth,           d,           D] };
+   key <AC06> { [         h,           H,               h,               H,       U0265,       U0265,       U2665,       U2661] }; // turned h, heart, unfilled heart
+   key <AC09> { [         l,           L,               l,               L,           l,           L,       U00A3,       U00A3] }; // GP pound
+   key <AC11> { [apostrophe,    quotedbl,      dead_acute,  dead_diaeresis,  apostrophe,    quotedbl,  apostrophe,    quotedbl] };
 
-   key <AC03> { [         d,           D,               d,               D,         eth,         eth] };
-   key <AC06> { [         h,           H,               h,               H,       U0265,       U0265] };
-   key <AB06> { [         n,           N,               n,               N,         eng,       U0272] };
-   key <AD04> { [         r,           R,               r,               R,       U0281,       U0279] };
-   key <AC02> { [         s,           S,               s,               S,       U0283,       U0283] };
-   key <AD05> { [         t,           T,               t,               T, Greek_theta, Greek_theta] };
-   key <AB01> { [         z,           Z,               z,               Z,       U0292,       U0292] };
-
-   include "level3(ralt_switch)"
-   include "level5(rctrl_switch)"
+   key <AB01> { [         z,           Z,               z,               Z,       U0292,       U0292,           z,           Z] }; // ezh
+   key <AB03> { [         c,           C,               c,               C,           c,           C,       U00A9,       U00A2] }; // copyright, cent
+   key <AB05> { [         b,           B,               b,               B,           b,           B,       U03B2,       U03B2] }; // beta
+   key <AB06> { [         n,           N,               n,               N,         eng,       U0272,           n,           N] }; // n with left hook
+   key <AB08> { [     comma,        less,    dead_cedilla,   guillemotleft,       comma,        less,       comma,       U2264] }; // less or equal
+   key <AB09> { [    period,     greater,          period,  guillemotright,      period,     greater,      period,       U2265] }; // greater or equal
+   key <AB10> {	[     slash,	question,           slash,           U00BF,       slash,    question,       slash,       U203D] }; // inverted question, interrobang
 };
